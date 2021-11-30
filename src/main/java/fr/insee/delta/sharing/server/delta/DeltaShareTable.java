@@ -11,6 +11,8 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.s3a.S3AFileSystem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import io.delta.sharing.server.config.TableConfig;
 import io.delta.standalone.DeltaLog;
 import io.delta.standalone.Snapshot;
@@ -19,6 +21,8 @@ import scala.collection.JavaConverters;
 
 public class DeltaShareTable {
 
+  Logger logger = LoggerFactory.getLogger(DeltaShareTable.class);
+
   private final long preSignedUrlTimeoutSeconds;
   private final Boolean evaluatePredicateHint;
   private final Configuration hadoopConfiguration;
@@ -26,14 +30,15 @@ public class DeltaShareTable {
   private final DeltaLog deltaLog;
 
 
-  public DeltaShareTable(long l, Boolean evaluatePredicateHint, TableConfig tableConfig)
-      throws IOException {
+  public DeltaShareTable(long l, Boolean evaluatePredicateHint, TableConfig tableConfig,
+      Configuration hadoopConfiguration) throws IOException {
     super();
     this.preSignedUrlTimeoutSeconds = l;
     this.evaluatePredicateHint = evaluatePredicateHint;
-    this.hadoopConfiguration = new Configuration();
+    this.hadoopConfiguration = hadoopConfiguration;
     this.tableConfig = tableConfig;
     this.deltaLog = deltaLog();
+    logger.info("deltalog {}" + this.deltaLog.getPath());
   }
 
   private DeltaLog deltaLog() throws IOException {
@@ -42,6 +47,9 @@ public class DeltaShareTable {
     if (!(fs instanceof S3AFileSystem)) {
       throw new IllegalStateException("Cannot share tables on non S3 file systems");
     }
+    logger.info("deltalog instanciation");
+    logger.info("table path : {}", tablePath);
+    logger.info("{}", this.hadoopConfiguration);
     return DeltaLog.forTable(this.hadoopConfiguration, tablePath);
   }
 
@@ -61,9 +69,13 @@ public class DeltaShareTable {
   public Stream<Wrapper> query(boolean includeFiles, @Nullable List<String> predicateHits,
       Integer limitHint) throws NoSuchMethodException, SecurityException, IllegalAccessException,
       IllegalArgumentException, InvocationTargetException {
+    logger.info("query table {} as {}", tableConfig.getName(), tableConfig.getLocation());
     final Snapshot snapshot = deltaLog.snapshot();
+    logger.info("version {}", snapshot.getVersion());
     final Method stateMethod = snapshot.getClass().getMethod("state", null);
+    logger.info("method state", snapshot.getVersion());
     final State state = (State) stateMethod.invoke(snapshot);
+    logger.info("state {}", state.protocol());
     final Protocol modelProtocol = new Protocol(state.protocol().minReaderVersion());
     final Metadata metadata = new Metadata(state.metadata().id(), state.metadata().name(),
         state.metadata().description(), new Format(), state.metadata().schemaString(),

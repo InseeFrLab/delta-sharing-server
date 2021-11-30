@@ -5,7 +5,7 @@ shares:
   - name: "schema1"
     tables:
     - name: "table1"
-      location: "s3a://<bucket-name>/<the-table-path>"
+      location: "s3a://projet-spark-lab/diffusion/delta/test"
     - name: "table2"
       location: "s3a://<bucket-name>/<the-table-path>"
 - name: "share2"

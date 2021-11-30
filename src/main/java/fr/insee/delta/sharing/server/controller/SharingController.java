@@ -10,6 +10,8 @@ import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.javatuples.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -36,6 +38,8 @@ import io.delta.sharing.server.config.TableConfig;
 
 @RestController
 public class SharingController {
+
+  Logger logger = LoggerFactory.getLogger(DeltaShareTable.class);
 
   public static final String DELTA_TABLE_VERSION = "Delta-Table-Version";
   private static final ObjectMapper OBJECT_MAPPER_DNJSON;
@@ -131,9 +135,11 @@ public class SharingController {
       @PathVariable("table") String tableName)
       throws DeltaSharingNotFoundException, IOException, NoSuchMethodException, SecurityException,
       IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-
+    logger.info("metadata endpoint");
     final TableConfig tableConfig = sharedTableManager.getTable(shareName, schemaName, tableName);
+    logger.info("tableConfig {}", tableConfig.getName());
     final DeltaShareTable table = this.deltaShareTableLoader.loadTable(tableConfig);
+    logger.info("delta table loaded!", tableConfig.getName());
     final Stream<Wrapper> wrappers = table.query(false, null, null);
     final ResponseBodyEmitter responseBodyEmitter = new ResponseBodyEmitter();
     try {

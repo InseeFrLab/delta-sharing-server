@@ -48,6 +48,10 @@ public class ShareManagerConfiguration {
     return null;
   }
 
+  public org.apache.hadoop.conf.Configuration hadoopConfiguration() {
+    return new org.apache.hadoop.conf.Configuration();
+  }
+
   @Bean
   public SharedTableManager sharedTableManager() {
     return new SharedTableManager(serverConfig());
@@ -55,7 +59,7 @@ public class ShareManagerConfiguration {
 
   @Bean
   public DeltaShareTableLoader deltaShareTableLoader() {
-    return new DeltaShareTableLoader(serverConfig());
+    return new DeltaShareTableLoader(serverConfig(), hadoopConfiguration());
   }
 
   @Bean
