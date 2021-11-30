@@ -3,182 +3,71 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.0</version>
-		<relativePath /> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+
+	<groupId>fr.insee</groupId>
+	<artifactId>delta-sharing-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>delta-sharing-server</name>
+	<packaging>pom</packaging>
+	<description>delta-sharing-server</description>
+
 	<properties>
 		<java.version>11</java.version>
 		<scala.binary.version>2.12</scala.binary.version>
+		<spring-boot.version>2.6.0</spring-boot.version>
 		<scala.version>2.12.10</scala.version>
 		<protobuf.version>3.2.0rc2</protobuf.version>
 		<protobuf-java-format.version>1.4</protobuf-java-format.version>
 		<hsqldb.version>2.4.1</hsqldb.version>
 		<flyway.version>5.2.4</flyway.version>
 		<flyway-maven-plugin.version>7.10.0</flyway-maven-plugin.version>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+	<!-- <dependencies> -->
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.delta</groupId>
-			<artifactId>delta-standalone_2.12</artifactId>
-			<version>0.2.0</version>
-		</dependency>
-		<dependency>
-			<groupId>io.delta</groupId>
-			<artifactId>delta-sharing-server_2.12</artifactId>
-			<version>0.2.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.scala-lang</groupId> -->
-<!-- 			<artifactId>scala-compiler</artifactId> -->
-<!-- 			<version>${scala.version}</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.scala-lang</groupId> -->
-<!-- 			<artifactId>scala-reflect</artifactId> -->
-<!-- 			<version>${scala.version}</version> -->
-<!-- 		</dependency> -->
-		<dependency>
-			<groupId>com.google.protobuf</groupId>
-			<artifactId>protobuf-java</artifactId>
-			<version>${protobuf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.javatuples</groupId>
-			<artifactId>javatuples</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.googlecode.protobuf-java-format</groupId>
-			<artifactId>protobuf-java-format</artifactId>
-			<version>${protobuf-java-format.version}</version>
-		</dependency>
-	</dependencies>
+	<!-- <dependency> -->
+	<!-- <groupId>org.scala-lang</groupId> -->
+	<!-- <artifactId>scala-compiler</artifactId> -->
+	<!-- <version>${scala.version}</version> -->
+	<!-- </dependency> -->
+	<!-- <dependency> -->
+	<!-- <groupId>org.scala-lang</groupId> -->
+	<!-- <artifactId>scala-reflect</artifactId> -->
+	<!-- <version>${scala.version}</version> -->
+	<!-- </dependency> -->
+	<!-- </dependencies> -->
 
 	<build>
-		<extensions>
-			<extension>
-				<groupId>kr.motd.maven</groupId>
-				<artifactId>os-maven-plugin</artifactId>
-				<version>1.3.0.Final</version>
-			</extension>
-		</extensions>
-		<plugins>
-			<plugin>
-				<groupId>net.alchim31.maven</groupId>
-				<artifactId>scala-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>scala-compile-first</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>add-source</goal>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>scala-test-compile</id>
-						<phase>process-test-resources</phase>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.xolstice.maven.plugins</groupId>
-				<artifactId>protobuf-maven-plugin</artifactId>
-				<version>0.5.0</version>
-				<extensions>true</extensions>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<goal>test-compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<protocArtifact>com.google.protobuf:protoc:3.0.0:exe:${os.detected.classifier}
-					</protocArtifact>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>add-protobuf-generate-sources</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>target/generated-sources/protobuf/java</source>
-							</sources>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>add-protobuf-generate-test-sources</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-test-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>target/generated-test-sources/protobuf/java</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-		</plugins>
 	</build>
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>com.fasterxml.jackson.module</groupId>
-				<artifactId>jackson-module-scala_2.12</artifactId>
-				<version>2.10.0</version>
-			</dependency>
-
+			<!-- <dependency> -->
+			<!-- <groupId>com.fasterxml.jackson.core</groupId> -->
+			<!-- <artifactId>jackson-core</artifactId> -->
+			<!-- <version>2.6.7</version> -->
+			<!-- </dependency> -->
+			<!-- <dependency> -->
+			<!-- <groupId>com.fasterxml.jackson.core</groupId> -->
+			<!-- <artifactId>jackson-databind</artifactId> -->
+			<!-- <version>2.6.7.3</version> -->
+			<!-- </dependency> -->
+			<!-- <dependency> -->
+			<!-- <groupId>com.fasterxml.jackson.module</groupId> -->
+			<!-- <artifactId>jackson-module-scala</artifactId> -->
+			<!-- <version>2.6.7.1</version> -->
+			<!-- </dependency> -->
+			<!-- <dependency> -->
+			<!-- <groupId>com.fasterxml.jackson.dataformat</groupId> -->
+			<!-- <artifactId>jackson-dataformat-yaml</artifactId> -->
+			<!-- <version>2.6.7</version> -->
+			<!-- </dependency> -->
 		</dependencies>
 	</dependencyManagement>
 
+	<modules>
+		<module>delta-sharing-server-core</module>
+		<module>delta-sharing-server-web</module>
+	</modules>
 </project>

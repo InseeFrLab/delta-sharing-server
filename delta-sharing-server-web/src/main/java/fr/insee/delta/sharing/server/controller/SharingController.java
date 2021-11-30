@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 import fr.insee.delta.sharing.server.delta.DeltaShareTable;
 import fr.insee.delta.sharing.server.delta.DeltaShareTableLoader;
+import fr.insee.delta.sharing.server.delta.Table;
 import fr.insee.delta.sharing.server.delta.Wrapper;
 import fr.insee.delta.sharing.server.exception.DeltaSharingNotFoundException;
 import fr.insee.delta.sharing.server.exception.InvalidTokenException;
@@ -32,7 +33,6 @@ import fr.insee.delta.sharing.server.protocol.Protocol.ListSharesResponse;
 import fr.insee.delta.sharing.server.protocol.Protocol.ListTablesResponse;
 import fr.insee.delta.sharing.server.protocol.Protocol.Schema;
 import fr.insee.delta.sharing.server.protocol.Protocol.Share;
-import fr.insee.delta.sharing.server.protocol.Protocol.Table;
 import fr.insee.delta.sharing.server.service.SharedTableManager;
 import io.delta.sharing.server.config.TableConfig;
 
@@ -103,7 +103,7 @@ public class SharingController {
       @RequestParam(value = "pageToken") @Nullable String pageToken)
       throws UnsupportedEncodingException, DeltaSharingNotFoundException, InvalidTokenException {
 
-    final Pair<List<Table>, String> data =
+    final Pair<List<fr.insee.delta.sharing.server.protocol.Protocol.Table>, String> data =
         sharedTableManager.listTables(shareName, schemaName, pageToken, maxResults);
     final ListTablesResponse.Builder b = ListTablesResponse.newBuilder();
     if (data.getValue0() != null) {
@@ -122,7 +122,8 @@ public class SharingController {
       throws DeltaSharingNotFoundException, IOException {
 
     final TableConfig tableConfig = sharedTableManager.getTable(shareName, schemaName, tableName);
-    final DeltaShareTable table = this.deltaShareTableLoader.loadTable(tableConfig);
+    final Table tableModel = new Table(tableConfig.getName(), tableConfig.getLocation());
+    final DeltaShareTable table = this.deltaShareTableLoader.loadTable(tableModel);
 
     return ResponseEntity.ok().header(DELTA_TABLE_VERSION, Long.toString(table.getTableVersion()))
         .build();
@@ -138,12 +139,13 @@ public class SharingController {
     logger.info("metadata endpoint");
     final TableConfig tableConfig = sharedTableManager.getTable(shareName, schemaName, tableName);
     logger.info("tableConfig {}", tableConfig.getName());
-    final DeltaShareTable table = this.deltaShareTableLoader.loadTable(tableConfig);
+    final Table tableModel = new Table(tableConfig.getName(), tableConfig.getLocation());
+    final DeltaShareTable table = this.deltaShareTableLoader.loadTable(tableModel);
     logger.info("delta table loaded!", tableConfig.getName());
     final Stream<Wrapper> wrappers = table.query(false, null, null);
     final ResponseBodyEmitter responseBodyEmitter = new ResponseBodyEmitter();
     try {
-      for (final var wrapper : wrappers.collect(Collectors.toList())) {
+      for (final Wrapper wrapper : wrappers.collect(Collectors.toList())) {
         responseBodyEmitter.send(OBJECT_MAPPER_DNJSON.writeValueAsString(wrapper));
         responseBodyEmitter.send("\n");
       }

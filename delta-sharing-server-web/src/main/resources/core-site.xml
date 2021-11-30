@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<configuration>
+<property>
+  <name>fs.s3a.connection.ssl.enabled</name>
+  <value>true</value>
+  <description>Enables or disables SSL connections to S3.</description>
+</property>
+
+<property>
+  <name>fs.s3a.endpoint</name>
+  <description>AWS S3 endpoint to connect to. An up-to-date list is
+    provided in the AWS Documentation: regions and endpoints. Without this
+    property, the standard region (s3.amazonaws.com) is assumed.
+  </description>
+  <value>minio.lab.sspcloud.fr</value>
+</property>
+
+<property>
+  <name>fs.s3a.path.style.access</name>
+  <value>true</value>
+  <description>Enable S3 path style access ie disabling the default virtual hosting behaviour.
+    Useful for S3A-compliant storage providers as it removes the need to set up DNS for virtual hosting.
+  </description>
+</property>
+
+<property>
+  <name>fs.s3a.aws.credentials.provider</name>
+  <value>org.apache.hadoop.fs.s3a.TemporaryAWSCredentialsProvider</value>
+</property>
+
+<property>
+  <name>fs.s3a.access.key</name>
+  <value>O6D22NJLTSALO2LATIZ1</value>
+</property>
+
+<property>
+  <name>fs.s3a.secret.key</name>
+  <value>MV2mIQs5upnXPUtNeDOjRiGLw9JUyou2TA3eD5P3</value>
+</property>
+
+<property>
+  <name>fs.s3a.session.token</name>
+  <value>eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiJPNkQyMk5KTFRTQUxPMkxBVElaMSIsImFjciI6IjAiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJhdWQiOlsibWluaW8tZGF0YW5vZGUiLCJvbnl4aWEiXSwiYXV0aF90aW1lIjoxNjM4MjYwMzYzLCJhenAiOiJvbnl4aWEiLCJlbWFpbCI6ImFsZXhpcy5kb25kb25AaW5zZWUuZnIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZXhwIjoxNjM4ODY1MTYzLCJmYW1pbHlfbmFtZSI6ImRvbmRvbiIsImdpdmVuX25hbWUiOiJhbGV4aXMiLCJncm91cHMiOlsiZHNpLWRkYyIsImZvcm1hdGlvbiIsInByYS1lbGlyZSIsInNwYXJrLWxhYiIsInNzcGNsb3VkLWFkbWluIl0sImlhdCI6MTYzODI2MDM2NiwiaXNzIjoiaHR0cHM6Ly9hdXRoLmxhYi5zc3BjbG91ZC5mci9hdXRoL3JlYWxtcy9zc3BjbG91ZCIsImp0aSI6Ijc2ZThlMDkyLTNiYjMtNGY2NC04MWE4LTUxN2M3NWVmZjQzNyIsImxvY2FsZSI6ImZyIiwibmFtZSI6ImFsZXhpcyBkb25kb24iLCJub25jZSI6IjJiZDFlNWQwLTQ0NDgtNDg0NS04ODg4LWZmMjczNTU5M2M4YSIsInBvbGljeSI6InN0c29ubHkiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhbGV4aXNkb25kb24iLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGdyb3VwcyBlbWFpbCIsInNlc3Npb25fc3RhdGUiOiI5ZTYwMjU4OC05YTA1LTQ1N2YtOGUwNC0wODhkOTNhNzcyM2IiLCJzaWQiOiI5ZTYwMjU4OC05YTA1LTQ1N2YtOGUwNC0wODhkOTNhNzcyM2IiLCJzdWIiOiIzYjcyNWU0Yi1iNGEzLTQ4MGQtYTkxMy01YmZmOWFmMGQzMTEiLCJ0eXAiOiJCZWFyZXIifQ.qhrtOQqxeuFtBuOcqwJ-EUpqiJZICMBW0JBnYYq-za8a8gcxBYM0uUT0vpf66EtC9ORKgL__ANJrqM66SVCyNw</value>
+</property>
+
+</configuration>

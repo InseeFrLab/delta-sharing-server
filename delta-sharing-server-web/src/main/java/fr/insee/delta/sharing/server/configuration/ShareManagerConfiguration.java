@@ -23,10 +23,6 @@ public class ShareManagerConfiguration {
 
   @Bean
   public ServerConfig serverConfig() {
-    // final List<ShareConfig> scl = Arrays.asList(new ShareConfig("share1", Arrays
-    // .asList(new SchemaConfig("schema1", Arrays.asList(new TableConfig("table1", "s31"))))));
-    // final ServerConfig sc = new ServerConfig(null, scl, null, null, "localhost", 80,
-    // "/delta-sharing", 3600, 10, false, false);
     logger.info("loading from file {}", this.configFile);
     if (configFile.startsWith("classpath:")) {
       try {
@@ -59,7 +55,9 @@ public class ShareManagerConfiguration {
 
   @Bean
   public DeltaShareTableLoader deltaShareTableLoader() {
-    return new DeltaShareTableLoader(serverConfig(), hadoopConfiguration());
+    final ServerConfig sc = serverConfig();
+    return new DeltaShareTableLoader(hadoopConfiguration(), sc.getEvaluatePredicateHints(),
+        sc.getPreSignedUrlTimeoutSeconds());
   }
 
   @Bean

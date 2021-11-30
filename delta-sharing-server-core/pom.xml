@@ -1,0 +1,124 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>fr.insee</groupId>
+		<artifactId>delta-sharing-server</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>delta-sharing-server-core</artifactId>
+
+	<properties>
+		<delta.version>1.0.0</delta.version>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+<!-- 			<dependency> -->
+<!-- 				<groupId>com.fasterxml.jackson.core</groupId> -->
+<!-- 				<artifactId>jackson-core</artifactId> -->
+<!-- 				<version>2.6.7</version> -->
+<!-- 			</dependency> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>com.fasterxml.jackson.core</groupId> -->
+<!-- 				<artifactId>jackson-databind</artifactId> -->
+<!-- 				<version>2.6.7.3</version> -->
+<!-- 			</dependency> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>com.fasterxml.jackson.module</groupId> -->
+<!-- 				<artifactId>jackson-module-scala</artifactId> -->
+<!-- 				<version>2.9.10</version> -->
+<!-- 			</dependency> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>com.fasterxml.jackson.dataformat</groupId> -->
+<!-- 				<artifactId>jackson-dataformat-yaml</artifactId> -->
+<!-- 				<version>2.6.7</version> -->
+<!-- 			</dependency> -->
+		</dependencies>
+	</dependencyManagement>
+	
+	<dependencies>
+		<dependency>
+			<groupId>io.delta</groupId>
+			<artifactId>delta-standalone_${scala.binary.version}</artifactId>
+			<version>0.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-client</artifactId>
+			<version>2.10.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.parquet</groupId>
+			<artifactId>parquet-hadoop</artifactId>
+			<version>1.10.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-aws</artifactId>
+			<version>2.10.1</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+<!-- 			<plugin> -->
+<!-- 				<groupId>net.alchim31.maven</groupId> -->
+<!-- 				<artifactId>scala-maven-plugin</artifactId> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<id>scala-compile-first</id> -->
+<!-- 						<phase>process-resources</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>add-source</goal> -->
+<!-- 							<goal>compile</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 					<execution> -->
+<!-- 						<id>scala-test-compile</id> -->
+<!-- 						<phase>process-test-resources</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>testCompile</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
+<!-- 				<artifactId>maven-compiler-plugin</artifactId> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<phase>compile</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>compile</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <relocations>
+                <relocation>
+                  <pattern>com.fasterxml</pattern>
+                  <shadedPattern>shaded.com.faster.xml</shadedPattern>
+                </relocation>
+              </relocations>
+              <shadedArtifactAttached>false</shadedArtifactAttached>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+	</build>
+
+</project>
