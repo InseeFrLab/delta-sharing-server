@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package fr.insee.delta.sharing.server.service;
 
 public class Page {
 

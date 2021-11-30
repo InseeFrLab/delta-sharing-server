@@ -1,0 +1,23 @@
+version: 1
+shares:
+- name: "share1"
+  schemas:
+  - name: "schema1"
+    tables:
+    - name: "table1"
+      location: "s3a://<bucket-name>/<the-table-path>"
+    - name: "table2"
+      location: "s3a://<bucket-name>/<the-table-path>"
+- name: "share2"
+  schemas:
+  - name: "schema2"
+    tables:
+    - name: "table3"
+      location: "s3a://<bucket-name>/<the-table-path>"
+host: "localhost"
+port: 8080
+endpoint: "/delta-sharing"
+preSignedUrlTimeoutSeconds: 900
+deltaTableCacheSize: 10
+stalenessAcceptable: false
+evaluatePredicateHints: false

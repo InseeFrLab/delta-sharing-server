@@ -1,4 +1,4 @@
-package com.example.demo.exception;
+package fr.insee.delta.sharing.server.exception;
 
 public class InvalidTokenException extends Exception { 
     /**
